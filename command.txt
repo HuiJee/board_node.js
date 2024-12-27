@@ -1,0 +1,24 @@
+- npm 설치
+npm install
+
+- 설치 확인
+node -v
+npm -v
+
+- 노드 실행
+node
+
+- Node.js 프로젝트 기본 설정
+npm init -y
+
+- express 설치
+npm install --save express
+
+- bootstrap 설치
+npm install bootstrap
+
+- 프로젝트 실행
+node app.js
+
+npm install express mysql2 dotenv body-parser
+npm install --save-dev jest supertest
