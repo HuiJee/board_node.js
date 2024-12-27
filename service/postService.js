@@ -1,8 +1,17 @@
 const postModel = require('../model/postModel');
 
 // 전체 게시글 조회
+// exports.getAllPosts = async () => {
+//     return await postModel.findAll();
+// };
+
 exports.getAllPosts = async () => {
-    return await postModel.findAll();
+    try {
+        const posts = await postModel.findAll();
+        return posts;
+    } catch (err) {
+        throw new Error('Error fetching posts from database');
+    }
 };
 
 // 특정 게시글 조회

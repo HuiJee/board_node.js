@@ -20,5 +20,69 @@ npm install bootstrap
 - 프로젝트 실행
 node app.js
 
+- ejs 템플릿 엔진 설치
+npm install ejs
+
+- express, mysql2, dotenv, body-parser 설치
 npm install express mysql2 dotenv body-parser
+* express: Node.js에서 웹 애플리케이션을 쉽게 만들 수 있게 해주는 웹 프레임워크.
+            Express는 HTTP 요청 처리, 라우팅, 미들웨어 등을 제공.
+* mysql2: Node.js와 MySQL 데이터베이스를 연결하기 위한 MySQL 클라이언트.
+            mysql과 비슷하지만 성능과 최신 기능을 지원.
+* dotenv: 환경 변수 파일(.env)에서 값을 읽어오는 라이브러리.
+        프로젝트의 환경 변수(예: DB 비밀번호, 포트 번호 등)를 코드에서 안전하게 사용할 수 있게 도와줌.
+* body-parser: HTTP 요청의 본문(body) 데이터를 쉽게 파싱(parsing)할 수 있게 도와주는 미들웨어.
+                Express에서 POST 요청의 본문 데이터를 다룰 때 유용.
+
+- 테스트 관련 패키지 설치
 npm install --save-dev jest supertest
+--save-dev는 개발모드에서만 필요한 패키지를 설치하겠다는 의미
+
+=======================================================================================
+
+- 타입 스크립트 설치
+npm install typescript --save-dev
+
+- 타입 스크립트 설정 파일인 tsconfig.json를 루트 디렉토리에 생성
+npx tsc --init
+=> tsconfig.json 설정을 통해 .ts 파일을 .js 파일로 변환시킨다.
+compilerOptions : TypeScript 컴파일러의 동작 방식을 정의
+include : 컴파일할 TypeScript 파일들을 정의
+exclude : 컴파일에서 제외할 파일을 정의
+
+모든 .ts 파일을 자동화로 변환하여 dist 폴더에 저장하려면 다음과 같이 설정하면 된다.
+{
+  "compilerOptions": {
+    "target": "ES6",        // 변환된 JavaScript의 ECMAScript 버전 (예: ES6)
+    "module": "commonjs",   // 모듈 시스템 (Node.js는 commonjs 사용)
+    "outDir": "./dist",     // 컴파일된 JavaScript 파일이 저장될 디렉토리
+    "rootDir": "./src",     // TypeScript 파일의 루트 디렉토리
+    "esModuleInterop": true // ES 모듈 호환성 옵션
+  },
+  "include": ["src/**/*.ts"],  // 모든 src 폴더 내의 .ts 파일 포함
+  "exclude": ["node_modules"]  // node_modules 폴더는 제외
+}
+outDir: 컴파일된 JavaScript 파일이 저장될 디렉토리.
+        예를 들어, ./dist로 설정하면, TypeScript 파일은 모두 dist 폴더 내의 JavaScript 파일로 변환.
+rootDir: TypeScript 파일들이 위치한 루트 디렉토리.
+        예를 들어, src로 설정하면, src 폴더 내의 모든 TypeScript 파일이 컴파일 대상이 됨.
+target: 컴파일된 JavaScript의 ECMAScript 버전. 최신 브라우저 및 Node.js에서는 ES6를 많이 사용.
+module: 사용될 모듈 시스템을 설정. Node.js에서는 commonjs를 사용.
+esModuleInterop: CommonJS 모듈과 ES 모듈 간의 호환성을 처리하는 옵션.
+
+- 타입 스크립트 자동 컴파일
+npx tsc --watch
+(타입스크립트 파일이 변경될 때마다 자동으로 컴파일 수행)
+
+이는 package.json에 스크립트를 추가하면 더 편하게 작업할 수 있다.
+{
+  "scripts": {
+    "build": "tsc",                      // TypeScript 파일을 컴파일
+    "start": "node dist/index.js",        // 컴파일된 JavaScript 파일을 실행
+    "dev": "tsc --watch & node dist/index.js"  // 변경 감지 후 자동 컴파일 및 실행
+  }
+}
+
+npm run build   // 컴파일
+npm start       // Node.js 서버 실행
+npm run dev     // 개발 모드(자동 컴파일 및 실행)
