@@ -17,7 +17,11 @@ exports.getAllPosts = async () => {
 
 // 특정 게시글 조회
 exports.getPostById = async (id) => {
-    return await postModel.findById(id);
+    try {
+        return await postModel.findById(id);
+    } catch (err) {
+        throw new Error('Error fetching posts from database');
+    }
 };
 
 // 게시글 생성
@@ -38,10 +42,20 @@ exports.createPost = async (post) => {
 
 // 게시글 수정
 exports.updatePost = async (id, post) => {
-    return await postModel.update(id, post);
+    post.password = await bcrypt.hash(post.password, 10);
+
+    try {
+        return await postModel.update(id, post);
+    } catch (err) {
+        throw new Error('게시글 저장 실패');
+    }
 };
 
 // 게시글 삭제
 exports.deletePost = async (id) => {
-    return await postModel.delete(id);
+    try {
+        return await postModel.delete(id);
+    } catch (err) {
+        throw new Error('게시글 삭제 실패');
+    }
 };

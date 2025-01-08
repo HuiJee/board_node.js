@@ -54,6 +54,11 @@
 
     <div class="detail-footer">
         <a href="/posts">목록으로 돌아가기</a>
+        <a href="/posts/<%= post.id %>/edit">수정하기</a>
+        <form action="/posts/<%= post.id %>?_method=DELETE" method="POST" style="display: inline;" onsubmit="return confirm('정말 삭제하시겠습니까?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger">삭제하기</button>
+        </form>
     </div>
 </div>
 

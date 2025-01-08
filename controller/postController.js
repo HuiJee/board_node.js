@@ -45,30 +45,66 @@ exports.createPost = async (req, res) => {
     }
 
     try {
-        const result = await postService.createPost({title, content, nick, password});
+        await postService.createPost({title, content, nick, password});
         res.redirect('/posts');  // 게시글 목록 페이지로 리다이렉트
     } catch (err) {
         res.status(500).send('게시글 저장 오류');
     }
 };
 
+// 글쓰기 수정 페이지 (GET)
+exports.editForm = async (req, res) => {
+    console.log('수정 페이지!');
+
+    try {
+        const { id } = req.params;
+        const post = await postService.getPostById(id);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+        res.render('postEdit', { post });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database error');
+    }
+};
+
 // 게시글 수정
 exports.updatePost = async (req, res) => {
     const { id } = req.params;
-    const { title, content } = req.body;
-    const updatedPost = await postService.updatePost(id, { title, content });
-    if (!updatedPost) {
-        return res.status(404).json({ error: 'Post not found' });
+    const { title, content, password } = req.body;
+
+    try {
+        if (!title || !content || !password) {
+            return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
+        }
+
+        const updatedPost = await postService.updatePost(id, { title, content, password });
+        if (!updatedPost) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        res.redirect('/posts');  // 게시글 목록 페이지로 리다이렉트
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('게시글 저장 오류');
     }
-    res.json(updatedPost);
 };
 
 // 게시글 삭제
 exports.deletePost = async (req, res) => {
     const { id } = req.params;
-    const deleted = await postService.deletePost(id);
-    if (!deleted) {
-        return res.status(404).json({ error: 'Post not found' });
+
+    try {
+        const deleted = await postService.deletePost(id);
+        if (!deleted) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        res.redirect('/posts');
+
+    }catch (err) {
+        console.error(err);
+        res.status(500).send('게시글 삭제 오류');
     }
-    res.status(204).end();
 };
