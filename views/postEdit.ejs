@@ -1,0 +1,42 @@
+<!-- views/create.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">게시글 수정</h1>
+    <form action="/posts/<%= post.id %>?_method=PUT" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" value="<%= post.title %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required><%= post.content %></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="nickname" class="form-label">닉네임 (30자 이하)</label>
+            <input type="text" class="form-control" id="nick" name="nick" maxlength="30" value="<%= post.nick %>" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">게시글 수정</button>
+        </div>
+    </form>
+</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
